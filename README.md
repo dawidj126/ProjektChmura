@@ -111,8 +111,8 @@ VITE_APP_URL=http://localhost:5173
 |---|---|---|
 | 1 | Architektura techniczna | ✅ Zakończony |
 | 2 | Projekt bazy danych | ✅ Zakończony |
-| 3 | Inicjalizacja backendu Laravel | ⏳ Następny |
-| 4 | Inicjalizacja frontendu Vue | — |
+| 3 | Inicjalizacja backendu Laravel | ✅ Zakończony |
+| 4 | Inicjalizacja frontendu Vue | ⏳ Następny |
 | 5 | Autoryzacja i konta użytkowników | — |
 | 6 | Role i uprawnienia | — |
 | 7 | Model i API ofert | — |
@@ -183,3 +183,41 @@ Projekt jest realizowany krokami według poniższego schematu pracy:
 ## Dokumentacja
 
 - [ARCHITECTURE.md](ARCHITECTURE.md) — Szczegółowa dokumentacja architektury technicznej
+- [docs/DATABASE.md](docs/DATABASE.md) — Projekt bazy danych (tabele, pola, relacje, indeksy)
+- [docs/ENUMS.md](docs/ENUMS.md) — Definicje wszystkich enumów PHP
+
+---
+
+## Informacja o użyciu LLM (Claude AI)
+
+Projekt realizowany jest przy wsparciu modelu **Claude Sonnet 4.6** (Anthropic) w ramach Claude Code CLI.
+
+### Zakres kodu generowanego przez LLM
+
+Cały projekt — architektura, kod backendu (Laravel), kod frontendu (Vue 3), migracje, modele, kontrolery, serwisy, komponenty — jest **generowany przez LLM** (Claude Sonnet 4.6) na podstawie szczegółowego promptu wykonawczego dostarczonego przez studenta.
+
+### Fragments wygenerowane przez LLM
+
+| Plik / katalog | Opis |
+|---|---|
+| `ARCHITECTURE.md` | Architektura techniczna projektu |
+| `docs/DATABASE.md` | Schemat bazy danych |
+| `docs/ENUMS.md` | Enumy PHP |
+| `backend/app/Enums/` | Wszystkie enumy (9 plików) |
+| `backend/app/Models/` | Wszystkie modele Eloquent (17 plików) |
+| `backend/app/Http/Controllers/` | Wszystkie kontrolery API |
+| `backend/app/Services/` | Serwisy (PDF, Powiadomienia, Logi) |
+| `backend/database/migrations/` | Wszystkie migracje (20 tabel) |
+| `backend/database/seeders/` | Seedery ról, użytkowników, stron, ustawień |
+| `backend/routes/api.php` | Pełna mapa tras REST API (65 tras) |
+| `frontend/` | Cały frontend Vue 3 (w trakcie realizacji) |
+
+### Modyfikacje wygenerowanych treści
+
+- Konfiguracja `.env` — wartości `DB_DATABASE`, `DB_USERNAME`, `DB_PASSWORD` uzupełniają dane lokalne
+- Klucz aplikacji (`APP_KEY`) generowany przez `php artisan key:generate`
+- Dane dostępowe do Mailtrap wypełniane ręcznie w środowisku deweloperskim
+
+### Kontekst rozmowy z LLM
+
+Rozmowy prowadzone są w narzędziu Claude Code (CLI) i można je śledzić przez historię commitów w tym repozytorium — każdy commit odpowiada jednemu krokowi z promptu wykonawczego.
