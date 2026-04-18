@@ -110,8 +110,8 @@ VITE_APP_URL=http://localhost:5173
 | Krok | Nazwa | Status |
 |---|---|---|
 | 1 | Architektura techniczna | ✅ Zakończony |
-| 2 | Projekt bazy danych | ⏳ Następny |
-| 3 | Inicjalizacja backendu Laravel | — |
+| 2 | Projekt bazy danych | ✅ Zakończony |
+| 3 | Inicjalizacja backendu Laravel | ⏳ Następny |
 | 4 | Inicjalizacja frontendu Vue | — |
 | 5 | Autoryzacja i konta użytkowników | — |
 | 6 | Role i uprawnienia | — |
