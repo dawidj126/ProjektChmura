@@ -36,6 +36,7 @@ Webowa aplikacja do wynajmu mieszkań i pokoi w Polsce. Projekt zaliczeniowy.
 ProjektZaliczeniowy/
 ├── backend/          # Laravel 11 API
 ├── frontend/         # Vue 3 SPA
+├── docs/             # Dokumentacja (baza danych, enumy)
 ├── ARCHITECTURE.md   # Dokumentacja architektury technicznej
 └── README.md
 ```
@@ -50,6 +51,7 @@ ProjektZaliczeniowy/
 cd backend
 composer install
 cp .env.example .env
+# Uzupełnij DB_PASSWORD w .env
 php artisan key:generate
 php artisan migrate --seed
 php artisan serve
@@ -81,7 +83,7 @@ DB_HOST=127.0.0.1
 DB_PORT=3306
 DB_DATABASE=najmuj_mieszkanie
 DB_USERNAME=root
-DB_PASSWORD=
+DB_PASSWORD=        # ← uzupełnij lokalnie
 FRONTEND_URL=http://localhost:5173
 SANCTUM_STATEFUL_DOMAINS=localhost:5173
 ```
@@ -105,42 +107,58 @@ VITE_APP_URL=http://localhost:5173
 
 ---
 
-## Realizacja kroków
+## Status realizacji
 
-| Krok | Nazwa | Status |
+### ✅ Zrealizowane
+
+| Krok | Nazwa | Co zawiera |
 |---|---|---|
-| 1 | Architektura techniczna | ✅ Zakończony |
-| 2 | Projekt bazy danych | ✅ Zakończony |
-| 3 | Inicjalizacja backendu Laravel | ✅ Zakończony |
-| 4 | Inicjalizacja frontendu Vue | ⏳ Następny |
-| 5 | Autoryzacja i konta użytkowników | — |
-| 6 | Role i uprawnienia | — |
-| 7 | Model i API ofert | — |
-| 8 | Formularz dodawania/edycji oferty | — |
-| 9 | Upload i galeria zdjęć | — |
-| 10 | Publiczna lista ofert | — |
-| 11 | Zaawansowana wyszukiwarka | — |
-| 12 | Szczegóły oferty | — |
-| 13 | Ulubione | — |
-| 14 | Wiadomości użytkownik ↔ właściciel | — |
-| 15 | Kontakt użytkownik ↔ administrator | — |
-| 16 | Rezerwacja oglądania | — |
-| 17 | Panel użytkownika | — |
-| 18 | Panel właściciela | — |
-| 19 | Panel administratora | — |
-| 20 | Blog | — |
-| 21 | Strony statyczne i prosty CMS | — |
-| 22 | Generowanie umów PDF | — |
-| 23 | Sztuczne płatności | — |
-| 24 | Powiadomienia | — |
-| 25 | SEO | — |
-| 26 | Bezpieczeństwo | — |
+| 1 | Architektura techniczna | Stack, konwencje nazw, layouty, struktura katalogów, ARCHITECTURE.md |
+| 2 | Projekt bazy danych | 20 tabel, 11 enumów PHP, relacje, indeksy, docs/DATABASE.md |
+| 3 | Inicjalizacja backendu Laravel | Laravel 11 + Sanctum + spatie/permission, 20 migracji, 17 modeli Eloquent, 65 tras REST API, seedery ról i użytkowników |
+| 4 | Inicjalizacja frontendu Vue | Vue 3 + Vite + Tailwind CSS, router z guardami, Pinia stores, Axios wrapper, 4 layouty, 10 komponentów bazowych, 30 stub widoków |
+| 5 | Autoryzacja — backend | Form Requests (Register/Login/ResetPassword/UpdateProfile), UserResource, AuthController, ProfileController |
+
+### ⚠️ W trakcie
+
+| Krok | Nazwa | Co zostało |
+|---|---|---|
+| 5 | Autoryzacja — frontend | Widoki: `LoginView`, `RegisterView`, `ForgotPasswordView`, `ProfileView` |
+
+> **Uwaga:** Migracje bazy danych czekają na uzupełnienie `DB_PASSWORD` w pliku `backend/.env`.  
+> Po uzupełnieniu uruchom: `php artisan migrate --seed`
+
+### ⏳ Do zrobienia
+
+| Krok | Nazwa |
+|---|---|
+| 6 | Role i uprawnienia (middleware, guardy per rola) |
+| 7 | Model i API ofert (pełny CRUD) |
+| 8 | Formularz dodawania i edycji oferty |
+| 9 | Upload i galeria zdjęć |
+| 10 | Publiczna lista ofert |
+| 11 | Zaawansowana wyszukiwarka i filtrowanie |
+| 12 | Szczegóły oferty |
+| 13 | Ulubione |
+| 14 | Wiadomości użytkownik ↔ właściciel |
+| 15 | Kontakt użytkownik ↔ administrator |
+| 16 | Rezerwacja oglądania nieruchomości |
+| 17 | Panel użytkownika |
+| 18 | Panel właściciela |
+| 19 | Panel administratora |
+| 20 | Blog |
+| 21 | Strony statyczne i prosty CMS |
+| 22 | Generowanie umów PDF |
+| 23 | Sztuczne płatności |
+| 24 | Powiadomienia |
+| 25 | SEO |
+| 26 | Bezpieczeństwo |
 
 ---
 
 ## Prompt wykonawczy projektu
 
-Projekt jest realizowany krokami według poniższego schematu pracy:
+Projekt jest realizowany krokami według poniższego schematu pracy przy użyciu Claude Code CLI.
 
 ### Zasady pracy
 - W każdej odpowiedzi realizowany jest jeden kolejny etap lub podetap
@@ -196,7 +214,7 @@ Projekt realizowany jest przy wsparciu modelu **Claude Sonnet 4.6** (Anthropic) 
 
 Cały projekt — architektura, kod backendu (Laravel), kod frontendu (Vue 3), migracje, modele, kontrolery, serwisy, komponenty — jest **generowany przez LLM** (Claude Sonnet 4.6) na podstawie szczegółowego promptu wykonawczego dostarczonego przez studenta.
 
-### Fragments wygenerowane przez LLM
+### Fragmenty wygenerowane przez LLM
 
 | Plik / katalog | Opis |
 |---|---|
@@ -206,18 +224,20 @@ Cały projekt — architektura, kod backendu (Laravel), kod frontendu (Vue 3), m
 | `backend/app/Enums/` | Wszystkie enumy (9 plików) |
 | `backend/app/Models/` | Wszystkie modele Eloquent (17 plików) |
 | `backend/app/Http/Controllers/` | Wszystkie kontrolery API |
+| `backend/app/Http/Requests/` | Form Requests (walidacja) |
+| `backend/app/Http/Resources/` | API Resources |
 | `backend/app/Services/` | Serwisy (PDF, Powiadomienia, Logi) |
 | `backend/database/migrations/` | Wszystkie migracje (20 tabel) |
 | `backend/database/seeders/` | Seedery ról, użytkowników, stron, ustawień |
 | `backend/routes/api.php` | Pełna mapa tras REST API (65 tras) |
-| `frontend/` | Cały frontend Vue 3 (w trakcie realizacji) |
+| `frontend/src/` | Cały frontend Vue 3 |
 
 ### Modyfikacje wygenerowanych treści
 
-- Konfiguracja `.env` — wartości `DB_DATABASE`, `DB_USERNAME`, `DB_PASSWORD` uzupełniają dane lokalne
+- Konfiguracja `.env` — wartości `DB_PASSWORD` uzupełniane lokalnie przez developera
 - Klucz aplikacji (`APP_KEY`) generowany przez `php artisan key:generate`
 - Dane dostępowe do Mailtrap wypełniane ręcznie w środowisku deweloperskim
 
 ### Kontekst rozmowy z LLM
 
-Rozmowy prowadzone są w narzędziu Claude Code (CLI) i można je śledzić przez historię commitów w tym repozytorium — każdy commit odpowiada jednemu krokowi z promptu wykonawczego.
+Rozmowy prowadzone są w narzędziu Claude Code (CLI). Historię można śledzić przez historię commitów w tym repozytorium — każdy commit odpowiada jednemu krokowi z promptu wykonawczego.
